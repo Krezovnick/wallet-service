@@ -1,0 +1,66 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 001-initial-schema
+      author: wallet-service
+      changes:
+        - createTable:
+            tableName: wallets
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: wallet_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: balance
+                  type: DECIMAL(19,4)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: active
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+            remarks: Wallet information table
+        
+        - addDefaultValue:
+            tableName: wallets
+            columnName: balance
+            defaultValueNumeric: 0
+        
+        - addDefaultValue:
+            tableName: wallets
+            columnName: currency
+            defaultValue: USD
+        
+        - addDefaultValue:
+            tableName: wallets
+            columnName: active
+            defaultValueBoolean: true

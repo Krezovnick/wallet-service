@@ -1,0 +1,20 @@
+﻿databaseChangeLog:
+  - changeSet:
+      id: 002-add-indexes
+      author: wallet-service
+      changes:
+        - createIndex:
+            indexName: idx_wallets_wallet_id
+            tableName: wallets
+            columns:
+              - column:
+                  name: wallet_id
+            unique: true
+        
+        - createIndex:
+            indexName: idx_wallets_created_at
+            tableName: wallets
+            columns:
+              - column:
+                  name: created_at
+                  descending: true

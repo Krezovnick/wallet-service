@@ -1,0 +1,122 @@
+﻿spring:
+  application:
+    name: wallet-service
+  
+  datasource:
+    url: \
+    username: \
+    password: \
+    hikari:
+      maximum-pool-size: \
+      minimum-idle: \
+      connection-timeout: \
+      idle-timeout: \
+      max-lifetime: \
+      leak-detection-threshold: \
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+        query:
+          in_clause_parameter_padding: true
+        connection:
+          handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_STATEMENT
+        generate_statistics: true
+  
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
+    drop-first: false
+  
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+      fail-on-ignored-properties: false
+  
+  main:
+    banner-mode: off
+
+server:
+  port: \
+  tomcat:
+    max-threads: \
+    min-spare-threads: 10
+    max-connections: \
+    accept-count: \
+    connection-timeout: \
+  
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/json,application/xml
+    min-response-size: 1024
+  
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /management
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db,ping
+        liveness:
+          include: ping
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 30s
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+    tags:
+      application: \
+      environment: \
+    enable:
+      jvm: true
+      logback: true
+      process: true
+      system: true
+
+logging:
+  level:
+    com.example.wallet: \
+    org.springframework.web: INFO
+    org.hibernate.SQL: \
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/wallet-service.log
+    max-size: 10MB
+    max-history: 30
+    total-size-cap: 1GB
+
+wallet:
+  retry:
+    max-attempts: \
+    backoff-delay: \
+  validation:
+    min-amount: \
+    max-amount: \
