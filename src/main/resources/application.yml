@@ -3,16 +3,16 @@
     name: wallet-service
   
   datasource:
-    url: \
-    username: \
-    password: \
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/walletdb}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     hikari:
-      maximum-pool-size: \
-      minimum-idle: \
-      connection-timeout: \
-      idle-timeout: \
-      max-lifetime: \
-      leak-detection-threshold: \
+      maximum-pool-size: ${DB_POOL_SIZE:100}
+      minimum-idle: ${DB_MIN_IDLE:20}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+      idle-timeout: ${DB_IDLE_TIMEOUT:600000}
+      max-lifetime: ${DB_MAX_LIFETIME:1800000}
+      leak-detection-threshold: ${DB_LEAK_DETECTION:30000}
   
   jpa:
     hibernate:
@@ -47,13 +47,13 @@
     banner-mode: off
 
 server:
-  port: \
+  port: ${SERVER_PORT:8080}
   tomcat:
-    max-threads: \
+    max-threads: ${TOMCAT_MAX_THREADS:200}
     min-spare-threads: 10
-    max-connections: \
-    accept-count: \
-    connection-timeout: \
+    max-connections: ${MAX_CONNECTIONS:10000}
+    accept-count: ${ACCEPT_COUNT:100}
+    connection-timeout: ${CONNECTION_TIMEOUT:5000}
   
   compression:
     enabled: true
@@ -91,8 +91,8 @@ management:
       percentiles-histogram:
         http.server.requests: true
     tags:
-      application: \
-      environment: \
+      application: ${spring.application.name}
+      environment: ${ENVIRONMENT:local}
     enable:
       jvm: true
       logback: true
@@ -101,9 +101,9 @@ management:
 
 logging:
   level:
-    com.example.wallet: \
+    com.example.wallet: ${LOG_LEVEL:INFO}
     org.springframework.web: INFO
-    org.hibernate.SQL: \
+    org.hibernate.SQL: ${HIBERNATE_SQL_LOG:WARN}
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
@@ -115,8 +115,8 @@ logging:
 
 wallet:
   retry:
-    max-attempts: \
-    backoff-delay: \
+    max-attempts: ${RETRY_MAX_ATTEMPTS:5}
+    backoff-delay: ${RETRY_BACKOFF_DELAY:100}
   validation:
-    min-amount: \
-    max-amount: \
+    min-amount: ${MIN_AMOUNT:0.01}
+    max-amount: ${MAX_AMOUNT:1000000}

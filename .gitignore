@@ -60,3 +60,9 @@ out/
 
 # Application specific
 heapdump.hprof
+
+# Инструкции
+INSTRUCTIONS.txt
+
+# Исключения (папки с .gitkeep) сохраняем
+!.gitkeep
